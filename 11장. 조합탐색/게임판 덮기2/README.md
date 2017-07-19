@@ -25,7 +25,7 @@ https://algospot.com/judge/problem/read/BOARDCOVER2
 
 
 
-##전처리
+###전처리
 <pre>
 
 우선 입력받은 블록을 어떻게 처리하면 좋을까요?
@@ -52,6 +52,48 @@ vector<string> rotate(const vector<string>& arr){
 }
 
 ```
+<pre>
+
+Q. rotations을 pair<int, int>로 저장한 이유는 무엇입니까?
+
+Q. 90도 회전하는 공식은 왜 저렇게 나오는 걸까요?
 
 
+</pre>
+
+
+코드 11.7 블록의 회전된 형태를 계산하고 상대좌표의 목록으로 변환하기<br/>  
+
+```c
+
+//block의 네가지 회전 형태를 만들고 이들의 상대 좌표릐 목록으로 변환한다.
+void generateRotations(vector<string> block){
+	rotations.clear();
+	rotations.resize(4);
+	for(int rot = 0; rot < 4; rot++){
+		int originY = -1; int originX = -1;
+		for(int i = 0; i < block.size(); i++)
+			for(int j = 0; j < block[i].size(); j++)
+				if(block[i][j] == '#'){
+					if(originY == -1){
+						//가장 윗줄 맨 왼쪽에 있는 칸이 '원점'이 된다.
+						originY = i;
+						originX = j;
+					}
+					//각 칸의 위치를 원점으로부터의 상대좌표로 표현한다.
+					rotations[rot].push_back(make_pair(i - originY, j - originX));
+				}
+			//블록을 시계 방향으로 90도 회전한다.
+			block = rotate(block);
+		}
+	
+	//네 가지 회전 형태 중 중복이 있을 경우 이를 ㅔ거한다.
+	sort(rotations.begin(), rotations.end());
+	rotations.erase(unique(rotations.begin(), rotations.end()), rotations.end());
+	//블록이 몇 칸 짜리인지 저장해 둔다.
+	blockSize = rotations[0].size();
+}
+				
+
+```
 
