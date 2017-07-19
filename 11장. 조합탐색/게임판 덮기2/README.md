@@ -1,1 +1,1 @@
-게임판 덮기2
+https://algospot.com/judge/problem/read/BOARDCOVER2
