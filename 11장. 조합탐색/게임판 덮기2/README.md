@@ -207,6 +207,7 @@ Q. search(placed)를 하기전에 covered를 막는 이유는 무엇입니까?
 <pre>
 다음 코드를 해석해봅시다.
 </pre>
+
 ```c++
 // placed: 지금까지 놓은 블록의 수
 // blanks: 남은 빈칸의 수
@@ -244,7 +245,6 @@ void search(int placed, int blanks) {
 	search(placed, blanks - 1);
 	covered[y][x]--;
 }
-
 '''
 
 ### 저자의 가지치기 말고는 또 어떤 아이디어가 있을수까요?
