@@ -25,7 +25,7 @@ https://algospot.com/judge/problem/read/BOARDCOVER2
 
 
 
-###전처리
+### 전처리
 <pre>
 
 우선 입력받은 블록을 어떻게 처리하면 좋을까요?
@@ -106,4 +106,82 @@ Q. 왜 블록의 가장 맨 위 가장 맨 왼쪽 것이 0,0이 되었을까요?
 
 
 
-## 완전탐색
+### 완전탐색
+
+코드 11.8 게임판 덮기 2 문제를 완전 탐색 알고리즘
+
+```c
+//게임판의 정보
+int boardH, boardW;
+vector<string> board;
+
+//게임판의 각 칸이 덮였는지를 나타낸다. 1이면 검은 칸이거나 이미 덮은 칸, 0이면 빈칸
+int covered[10][10];
+
+//지금까지 찾은 최적해
+int best;
+
+//(y, x)를 왼쪽 위칸으로 해서 주어진 블록을 delta = 1이면 놓고, -1이면 없댄다.
+//블록을 놓을 때 이미 놓인 블록이나 검은 칸과 겹치면 거짓을, 아니면 참을 반환한다.
+bool set(int y, int x, const vector<pair<int,int> >& cells, int delta) {
+	bool ok = true;
+	for(int i = 0; i < cells.size(); i++) {
+		int cy = y + cells[i].first, cx = x + cells[i].second;
+		if(cy < 0 || cx < 0 || cy >= boardH || cx >= boardW)
+			ok = false;
+		else {
+			covered[cy][cx] += delta;
+			if(covered[cy][cx] > 1) ok = false;
+		}
+	}
+	return ok;
+}
+
+
+//placed : 지금까지 놓은 블록의 수
+void search(int placed){
+	//아직 채우지 못한 빈 칸 중 가장 윗줄 왼쪽에 있는 칸을 찾는다.
+	int y = -1, x = -1;
+	for(int i = 0; i < boardH; i++){
+		for(int j = 0; j < boardW; j++)
+			if(covered[i][j] == 0){
+				y = i;
+				x = j;
+				break;
+			}
+		if(y != -1) break;
+	}
+
+	//기저사례 : 게임판의 모든 칸을 처리한 경우
+	if(y == -1){
+		best = max(best, placed);
+		return;
+	}
+
+	//이 칸을 덮는다.
+	for(int i = 0; i < rotations.size(); i++){
+		if(set(y, x, rotations[i], 1))
+			search(placed + 1);
+		set(y, x, rotations[i], -1);
+	}
+
+	//이 칸을 덮지 않고 '막아'둔다.
+	covered[y][x] = 1;
+	search(placed);
+	covered[y][x] = 0;
+}
+
+int solve(){
+	best = 0;
+
+	//covered 배열을 초기화 한다.
+	for(int i = 0; i < boardH; i++){
+		for(int j = 0; j < boardW; j++){
+			covered[i][j] = (board[i][j] == '#' ? 1 : 0);
+		}
+	}
+	search(0);
+	return best;
+}
+
+```
