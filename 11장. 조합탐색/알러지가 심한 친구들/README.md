@@ -1,1 +1,1 @@
-알러지가 심한 친구들
+https://algospot.com/judge/problem/read/ALLERGY
