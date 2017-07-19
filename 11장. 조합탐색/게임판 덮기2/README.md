@@ -33,14 +33,25 @@ https://algospot.com/judge/problem/read/BOARDCOVER2
 
 
 회전을 한 것을 왜 미리 모아두는지 말해봅시다.
+</pre>
 
 
-```c
-
-
+코드 11.7 블록의 회전된 형태를 계산하고 상대좌표의 목록으로 변환하기<br/>  
+```c 
+//블록의 각 회전된 형태를 상대 좌표의 목록으로 저장해둔다.
+vector<vector<pair<int, int> > > rotations;
+//블록의 크기
+int blockSize;
+//2차원 배열 arr을 시계방향으로 90도 돌린 결과를 반환한다.
+vector<string> rotate(const vector<string>& arr){
+	vector<string> ret(arr[0].size(), string(arr.size(), ' '));
+	for(int i = 0; i < arr.size(); i++){
+		for(int j = 0; j < arr[0].size(); j++){
+			ret[j][arr.size() - i - 1] = arr[i][j];
+	return ret;
+}
 
 ```
 
 
 
-</pre>
