@@ -245,6 +245,6 @@ void search(int placed, int blanks) {
 	search(placed, blanks - 1);
 	covered[y][x]--;
 }
-'''
+```
 
-### 저자의 가지치기 말고는 또 어떤 아이디어가 있을수까요?
+- 저자의 가지치기 말고는 또 어떤 아이디어가 있을 수 있을까요?
