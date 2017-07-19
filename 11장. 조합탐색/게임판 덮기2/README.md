@@ -87,7 +87,7 @@ void generateRotations(vector<string> block){
 			block = rotate(block);
 		}
 	
-	//네 가지 회전 형태 중 중복이 있을 경우 이를 ㅔ거한다.
+	//네 가지 회전 형태 중 중복이 있을 경우 이를 제거한다.
 	sort(rotations.begin(), rotations.end());
 	rotations.erase(unique(rotations.begin(), rotations.end()), rotations.end());
 	//블록이 몇 칸 짜리인지 저장해 둔다.
@@ -97,3 +97,13 @@ void generateRotations(vector<string> block){
 
 ```
 
+<pre>
+Q. 그림 11.8의 4가지 회전에서 번호를 메겨볼까요?
+
+Q. 왜 블록의 가장 맨 위 가장 맨 왼쪽 것이 0,0이 되었을까요?
+
+</pre>
+
+
+
+## 완전탐색
