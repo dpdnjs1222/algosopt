@@ -9,7 +9,7 @@ https://algospot.com/judge/problem/read/BOARDCOVER2
 뭘 어떻게 뭐부터 해야할지 헷갈리 셨을 것 입니다.
 
 네 그렇습니다. 이 문제는 조합탐색의 가지치는 좋은 문제인 것 같지 않아요.
-구현이 어려운 문제입니다.
+구현이 어려운 문제입니다. ㅜㅜ
 
 하지만, 책에선 간단하게 가지치는 방법에 대해 소개하고 있습니다.
 혹시 완전탐색의 탐색 범위를 이런 방법으로 줄여보았다라고 하는 분 있으면 말해봅시당.
@@ -37,7 +37,7 @@ https://algospot.com/judge/problem/read/BOARDCOVER2
 
 
 코드 11.7 블록의 회전된 형태를 계산하고 상대좌표의 목록으로 변환하기<br/>  
-```c 
+```c ++
 //블록의 각 회전된 형태를 상대 좌표의 목록으로 저장해둔다.
 vector<vector<pair<int, int> > > rotations;
 //블록의 크기
@@ -64,7 +64,7 @@ Q. 90도 회전하는 공식은 왜 저렇게 나오는 걸까요?
 
 코드 11.7 블록의 회전된 형태를 계산하고 상대좌표의 목록으로 변환하기<br/>  
 
-```c
+```c++
 
 //block의 네가지 회전 형태를 만들고 이들의 상대 좌표릐 목록으로 변환한다.
 void generateRotations(vector<string> block){
@@ -185,3 +185,66 @@ int solve(){
 }
 
 ```
+<pre>
+
+이 코드는 엄청나게 배울점이 많습니다. 차근차근 살펴보면서 실무에서도 우리가 쓸 수 있도록
+우리의 것으로 만들어봅시다.
+
+Q. set 함수의 동작을 설명해봅시다. 어떤 기능을 하죠? 이런 코드가 과연 좋은 코드인 걸까요?
+
+Q. 이중 for문을 나오기 위해서 어떻게 코드를 짰는가 살펴봅시다.
+
+Q. 기저 사례를 해석해봅시다.
+
+Q. search(placed)를 하기전에 covered를 막는 이유는 무엇입니까?
+
+</pre>
+
+
+
+### 가지치기
+
+<pre>
+다음 코드를 해석해봅시다.
+</pre>
+```c++
+// placed: 지금까지 놓은 블록의 수
+// blanks: 남은 빈칸의 수
+void search(int placed, int blanks) {
+	// 빈칸 중 가장 윗줄 왼쪽에 있는
+	int y = -1, x = -1;
+	for(int i = 0; i < boardH; i++) {
+		for(int j = 0; j < boardW; j++)
+			if(covered[i][j] == 0) {
+				y = i;
+				x = j;
+				break;
+			}
+		if(y != -1) break;
+	}
+	// 기저 사례: 게임판의 모든 칸을 처리한 경우
+	if(y == -1) {
+		best = max(best, placed);
+		return;
+	}
+
+	// 가지치기
+	int upperBound = blanks / blockSize + placed;
+	if(upperBound <= best) return;
+
+	// 이 칸을 덮는다
+	for(int i = 0; i < rotations.size(); i++) {
+		if(set(y, x, rotations[i], 1))
+			search(placed+1, blanks - blockSize);
+		set(y, x, rotations[i], -1);
+	}
+
+	// 이 칸을 덮지 않고 막아 둔다
+	covered[y][x]++;
+	search(placed, blanks - 1);
+	covered[y][x]--;
+}
+
+'''
+
+### 저자의 가지치기 말고는 또 어떤 아이디어가 있을수까요?
