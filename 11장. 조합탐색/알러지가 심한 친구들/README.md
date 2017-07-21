@@ -1,10 +1,14 @@
 https://algospot.com/judge/problem/read/ALLERGY
 
 
+이번 문제야 말로 최적화를 공부하기 좋은 문제입니다. 우리 이 문제를 통해 최적화에 대해 심도 있는 토의를 하고 인사이트를 얻어 봅시다.
+
+
 ### NP완비
 
-
-__ 11.9 알러지 문제를 해결하는 첫 번째 조합 탐색 알고리즘__
+<pre>
+**11.9 알러지 문제를 해결하는 첫 번째 조합 탐색 알고리즘**
+</pre>
 
 ```c++
 
@@ -60,5 +64,58 @@ void slowSearch(int food, vector<int>& edible, int chosen){
 ### Q. 이 코드에서 좀 더 최적화하는 방법은 무엇이 더 있을까요?
 
 
+__ 11.10 문제를 해결하는 두 번째 조합 탐색 알고리즘__
+
+```c++
+int n, m;
+
+//canEat[i] : i번 친구가 먹을 수 있는 음식의 집합
+//eaters[i] : i번 음식을 먹을 수 있는 친구들의 집합
+
+vector<int> canEat[50], eaters[50];
+int best;
+
+//chosen : 지금까지 선택한 음식의 수
+//edible[i] : 지금까지 고른 음식 중 i번 친구가 먹을 수 있는 음식의 수
+void search(vector<int>& edible, int chosen){
+
+	//간단한 가지치기
+	if(chosen >= best) return;
+	//아직 먹을 음식이 없는 첫 번째 친구를 찾는다.
+	int first = 0;
+	while(first < n && edible[first] > 0) first++;
+
+	//모든 친구가 먹을 음식이 있는 경우 종료한다.
+	if(first == n){
+		best = chosen; 
+		return;
+	}
+
+	for(int i = 0; i < canEat[first].size(); i++){
+		int food = canEat[first][i];
+		for(int j = 0; j < eaters[food].size(); j++){
+			edible[eaters[food][j]]++;
+		}
+		search(edible, chosen + 1);
+		for(int j = 0; j < eaters[food].size(); j++){
+			edible[eaters[food][j]]++;
+		}
+	}
+}
+
+```
+<pre>
+	Q.//모든 친구가 먹을 음식이 있는 경우 종료한다.
+	if(first == n){
+		best = chosen; 
+		return;
+	}
+	에서 왜 best = min(best, chosen)이 아닌가요?
+	
+	Q. search에서 food인자가 없어도 되는 이유에 대해 말해 봅시다
+</pre>
 
 
+
+
+#우리가 논의했던 최적화 방법들을 모두 녹여 코드를 짜보는 시간을 가집시다.
