@@ -1,8 +1,7 @@
 https://algospot.com/judge/problem/read/ALLERGY
 
 
-
-
+### NP완비
 
 
 __ 11.9 알러지 문제를 해결하는 첫 번째 조합 탐색 알고리즘__
@@ -46,3 +45,20 @@ void slowSearch(int food, vector<int>& edible, int chosen){
 
 
 ```
+
+
+<pre>
+	Q. 이 코드에서 탐색을 하는 방법에 대해 그림으로 설명해봅시다.
+	   왜 NP완비 문제인 걸까요?
+	   
+	Q. 이 코드에서 좀 더 최적화하는 방법은 무엇이 더 있을까요?
+
+
+</pre>
+
+
+### Q. 이 코드에서 좀 더 최적화하는 방법은 무엇이 더 있을까요?
+
+
+
+
