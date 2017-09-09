@@ -55,9 +55,9 @@ vector<string> rotate(const vector<string>& arr){
 <pre>
 
 Q. rotations을 pair<int, int>로 저장한 이유는 무엇입니까?
-
+A. 좌표
 Q. 90도 회전하는 공식은 왜 저렇게 나오는 걸까요?
-
+B. 
 
 </pre>
 
